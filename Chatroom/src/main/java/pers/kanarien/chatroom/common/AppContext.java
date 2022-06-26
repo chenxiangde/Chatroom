@@ -21,8 +21,10 @@ public class AppContext {
 
     @Autowired
     private WebSocketServer webSocketServer;
+
     @Autowired
     private UserInfoDao userInfoDao;
+
     @Autowired
     private GroupInfoDao groupDao;
     
@@ -30,9 +32,9 @@ public class AppContext {
     
     /**
      * 描述：Tomcat加载完ApplicationContext-main和netty文件后：
-     *      1. 启动Netty WebSocket服务器；
-     *      2. 加载用户数据；
-     *      3. 加载用户交流群数据。
+     * 1. 启动Netty WebSocket服务器；
+     * 2. 加载用户数据；
+     * 3. 加载用户交流群数据。
      */
     @PostConstruct
     public void init() {
@@ -46,16 +48,16 @@ public class AppContext {
     }
 
     /**
-     * 描述：Tomcat服务器关闭前需要手动关闭Netty Websocket相关资源，否则会造成内存泄漏。
-     *      1. 释放Netty Websocket相关连接；
-     *      2. 关闭Netty Websocket服务器线程。（强行关闭，是否有必要？）
+     * 描述：Tomcat服务器关闭前需要手动关闭Netty WebSocket相关资源，否则会造成内存泄漏。
+     * 1. 释放Netty WebSocket相关连接；
+     * 2. 关闭Netty WebSocket服务器线程。
      */
     @SuppressWarnings("deprecation")
     @PreDestroy
     public void close() {
-        logger.info("正在释放Netty Websocket相关连接...");
+        logger.info("正在释放Netty WebSocket相关连接...");
         webSocketServer.close();
-        logger.info("正在关闭Netty Websocket服务器线程...");
+        logger.info("正在关闭Netty WebSocket服务器线程...");
         nettyThread.stop();
         logger.info("系统成功关闭！");
     }

@@ -5,10 +5,15 @@ import java.util.List;
 public class UserInfo {
 
     private String userId;
+
     private String username;
+
     private String password;
+
     private String avatarUrl;
+
     private List<UserInfo> friendList;
+
     private List<GroupInfo> groupList;
     
     public UserInfo() {
@@ -64,6 +69,4 @@ public class UserInfo {
     public void setGroupList(List<GroupInfo> groupList) {
         this.groupList = groupList;
     }
-
-
 }

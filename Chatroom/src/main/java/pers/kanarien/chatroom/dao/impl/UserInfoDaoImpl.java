@@ -30,7 +30,6 @@ public class UserInfoDaoImpl implements UserInfoDao {
         UserInfo userInfo7 = new UserInfo("007", "Member007", "007", "static/img/avatar/Member007.jpg");
         UserInfo userInfo8 = new UserInfo("008", "Member008", "008", "static/img/avatar/Member008.jpg");
         UserInfo userInfo9 = new UserInfo("009", "Member009", "009", "static/img/avatar/Member009.jpg");
-        
         // 设置用户好友列表
         userInfo.setFriendList(generateFriendList("001"));
         userInfo2.setFriendList(generateFriendList("002"));
@@ -41,7 +40,6 @@ public class UserInfoDaoImpl implements UserInfoDao {
         userInfo7.setFriendList(generateFriendList("007"));
         userInfo8.setFriendList(generateFriendList("008"));
         userInfo9.setFriendList(generateFriendList("009"));
-        
         // 设置用户群列表，共1个群
         GroupInfo groupInfo = new GroupInfo("01", "Group01", "static/img/avatar/Group01.jpg", null);
         List<GroupInfo> groupList = new ArrayList<GroupInfo>();
@@ -55,7 +53,6 @@ public class UserInfoDaoImpl implements UserInfoDao {
         userInfo7.setGroupList(groupList);
         userInfo8.setGroupList(groupList);
         userInfo9.setGroupList(groupList);
-        
         Constant.userInfoMap.put("Member001", userInfo);
         Constant.userInfoMap.put("Member002", userInfo2);
         Constant.userInfoMap.put("Member003", userInfo3);
@@ -115,6 +112,4 @@ public class UserInfoDaoImpl implements UserInfoDao {
         }
         return friendList;
     }
-
-
 }

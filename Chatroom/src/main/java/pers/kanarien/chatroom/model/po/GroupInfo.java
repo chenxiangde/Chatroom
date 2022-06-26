@@ -5,8 +5,11 @@ import java.util.List;
 public class GroupInfo {
 
     private String groupId;
+
     private String groupName;
+
     private String groupAvatarUrl;
+
     private List<UserInfo> members;
     
     public GroupInfo(String groupId, String groupName, String groupAvatarUrl, List<UserInfo> members) {
@@ -45,5 +48,4 @@ public class GroupInfo {
     public void setGroupAvatarUrl(String groupAvatarUrl) {
         this.groupAvatarUrl = groupAvatarUrl;
     }
-    
 }
