@@ -1,5 +1,7 @@
 package pers.kanarien.chatroom.web.websocket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import io.netty.buffer.ByteBuf;
@@ -24,6 +26,8 @@ import pers.kanarien.chatroom.util.Constant;
 @Sharable
 public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpRequestHandler.class);
+
     /**
      * 描述：读取完连接的消息后，对消息进行处理。
      * 这里仅处理HTTP请求，WebSocket请求交给下一个处理器。
@@ -38,22 +42,19 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     /**
-     * 描述：处理Http请求，主要是完成HTTP协议到Websocket协议的升级
+     * 描述：处理Http请求，主要是完成HTTP协议到WebSocket协议的升级
      * @param ctx
      * @param req
      */
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
         if (!req.decoderResult().isSuccess()) {
-            sendHttpResponse(ctx, req,
-                    new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
+            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
         }
-
         WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
                 "ws:/" + ctx.channel() + "/websocket", null, false);
         WebSocketServerHandshaker handshaker = wsFactory.newHandshaker(req);
         Constant.webSocketHandshakerMap.put(ctx.channel().id().asLongText(), handshaker);
-
         if (handshaker == null) {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
         } else {
@@ -81,7 +82,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
+        LOGGER.error("HttpRequestHandler Exception:", cause);
         ctx.close();
     }
 }
