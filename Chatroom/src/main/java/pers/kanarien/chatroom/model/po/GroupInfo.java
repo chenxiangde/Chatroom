@@ -11,7 +11,7 @@ public class GroupInfo {
     private String groupAvatarUrl;
 
     private List<UserInfo> members;
-    
+
     public GroupInfo(String groupId, String groupName, String groupAvatarUrl, List<UserInfo> members) {
         super();
         this.groupId = groupId;
@@ -23,12 +23,15 @@ public class GroupInfo {
     public String getGroupId() {
         return groupId;
     }
+
     public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
+
     public List<UserInfo> getMembers() {
         return members;
     }
+
     public void setMembers(List<UserInfo> members) {
         this.members = members;
     }
@@ -48,4 +51,5 @@ public class GroupInfo {
     public void setGroupAvatarUrl(String groupAvatarUrl) {
         this.groupAvatarUrl = groupAvatarUrl;
     }
+
 }
