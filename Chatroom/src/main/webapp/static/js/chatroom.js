@@ -596,7 +596,7 @@ var processMsgBox = {
                     .css("margin-right", minMarginRightWidth + "px");
             }
         }
-        // 4. 把 调整后的消息html标签字符串 添加到已发送用户消息表，并清空暂存区
+        // 4. 把调整后的消息html标签字符串添加到已发送用户消息表，并清空暂存区
         sentMessageMap.get(fromUserId).push($('.newsList-temp li').last().prop("outerHTML"));
         $('.newsList-temp').empty();
         // 5. 滚动条滑到底
