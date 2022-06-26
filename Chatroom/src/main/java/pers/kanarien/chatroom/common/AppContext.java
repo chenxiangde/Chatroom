@@ -16,7 +16,6 @@ import pers.kanarien.chatroom.web.websocket.WebSocketServer;
 @Component
 @Scope("singleton")
 public class AppContext {
-
     private final Logger logger = LoggerFactory.getLogger(AppContext.class);
 
     @Autowired
@@ -27,9 +26,9 @@ public class AppContext {
 
     @Autowired
     private GroupInfoDao groupDao;
-    
+
     private Thread nettyThread;
-    
+
     /**
      * 描述：Tomcat加载完ApplicationContext-main和netty文件后：
      * 1. 启动Netty WebSocket服务器；
