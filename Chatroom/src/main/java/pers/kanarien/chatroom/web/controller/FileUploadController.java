@@ -22,9 +22,8 @@ public class FileUploadController {
     private FileUploadService fileUploadService;
     
     @RequestMapping(value = "/upload", method = POST)
-    @ResponseBody 
-    public ResponseJson upload(
-            @RequestParam(value = "file", required = true) MultipartFile file, HttpServletRequest request) {
+    @ResponseBody
+    public ResponseJson upload(@RequestParam(value = "file", required = true) MultipartFile file, HttpServletRequest request) {
         return fileUploadService.upload(file, request);
     }
 }
