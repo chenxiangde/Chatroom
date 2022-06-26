@@ -76,7 +76,7 @@ var ws = {
             };
             socket.send(JSON.stringify(data));
         } else {
-            alert("Websocket连接没有开启！");
+            alert("WebSocket连接没有开启！");
         }
     },
 
@@ -93,7 +93,7 @@ var ws = {
             };
             socket.send(JSON.stringify(data));
         } else {
-            alert("Websocket连接没有开启！");
+            alert("WebSocket连接没有开启！");
         }
     },
 
@@ -110,7 +110,7 @@ var ws = {
             };
             socket.send(JSON.stringify(data));
         } else {
-            alert("Websocket连接没有开启！");
+            alert("WebSocket连接没有开启！");
         }
     },
 
@@ -129,7 +129,7 @@ var ws = {
             };
             socket.send(JSON.stringify(data));
         } else {
-            alert("Websocket连接没有开启！");
+            alert("WebSocket连接没有开启！");
         }
     },
 
@@ -148,7 +148,7 @@ var ws = {
             };
             socket.send(JSON.stringify(data));
         } else {
-            alert("Websocket连接没有开启！");
+            alert("WebSocket连接没有开启！");
         }
     },
 
@@ -169,13 +169,12 @@ var ws = {
                     .siblings(".liLeft").children('img').attr("src");
                 $receiveLi = $(this).parent(".liRight").parent("li");
             }
-        })
+        });
         var answer = '';
         answer += '<li>' +
             '<div class="answers">' + content + '</div>' +
             '<div class="answerHead"><img src="' + fromAvatarUrl + '"/></div>' +
             '</li>';
-
         // 消息框处理
         processMsgBox.receiveSingleMsg(answer, fromUserId);
         // 好友列表处理
@@ -196,18 +195,17 @@ var ws = {
                     .siblings(".liLeft").children('img').attr("src");
                 /* $receiveLi = $(this).parent(".liRight").parent("li"); */
             }
-        })
+        });
         $('.conLeft').find('span.hidden-groupId').each(function () {
             if (this.innerHTML == toGroupId) {
                 $receiveLi = $(this).parent(".liRight").parent("li");
             }
-        })
+        });
         var answer = '';
         answer += '<li>' +
             '<div class="answers">' + content + '</div>' +
             '<div class="answerHead"><img src="' + fromAvatarUrl + '"/></div>' +
             '</li>';
-
         // 消息框处理
         processMsgBox.receiveGroupMsg(answer, toGroupId);
         // 好友列表处理
@@ -230,7 +228,7 @@ var ws = {
                     .siblings(".liLeft").children('img').attr("src");
                 $receiveLi = $(this).parent(".liRight").parent("li");
             }
-        })
+        });
         var fileHtml =
             '<li>' +
             '<div class="receive-file-shown">' +
@@ -246,7 +244,6 @@ var ws = {
             '</div>' +
             '<div class="answerHead"><img src="' + fromAvatarUrl + '"/></div>' +
             '</li>';
-
         // 消息框处理
         processMsgBox.receiveSingleMsg(fileHtml, fromUserId);
         // 好友列表处理
@@ -270,12 +267,12 @@ var ws = {
                     .siblings(".liLeft").children('img').attr("src");
                 /* $receiveLi = $(this).parent(".liRight").parent("li"); */
             }
-        })
+        });
         $('.conLeft').find('span.hidden-groupId').each(function () {
             if (this.innerHTML == toGroupId) {
                 $receiveLi = $(this).parent(".liRight").parent("li");
             }
-        })
+        });
         var fileHtml =
             '<li>' +
             '<div class="receive-file-shown">' +
@@ -291,7 +288,6 @@ var ws = {
             '</div>' +
             '<div class="answerHead"><img src="' + fromAvatarUrl + '"/></div>' +
             '</li>';
-
         // 2. 消息框处理
         processMsgBox.receiveGroupMsg(fileHtml, toGroupId);
         // 3. 好友列表处理
@@ -304,9 +300,8 @@ var ws = {
 };
 
 function logout() {
-    // 1. 关闭websocket连接
+    // 1. 关闭webSocket连接
     ws.remove();
-
     // 2. 注销登录状态
     $.ajax({
         type: 'POST',
@@ -349,14 +344,12 @@ $('.myfile').on('fileerror', function (event, data, msg) {
 });
 //异步上传返回结果处理
 $(".myfile").on("fileuploaded", function (event, data, previewId, index) {
-
     // 1. 上传成功1.5秒后自动关闭上传模态框
     console.log("fileuploaded");
     setTimeout(function () {
         $('#upload-cancel').trigger('click');
         $('.fileinput-remove').trigger('click');
     }, 1500);
-
     // 2. 获取、设置参数
     var returnData = data.response.data;
     var originalFilename = returnData.originalFilename;
@@ -383,17 +376,14 @@ $(".myfile").on("fileuploaded", function (event, data, previewId, index) {
         '</div>' +
         '<div class="nesHead"><img src="' + avatarUrl + '"/></div>' +
         '</li>';
-
     // 3. 发送信息到服务器
     if (toUserId.length != 0) {
         ws.fileMsgSingleSend(fromUserId, toUserId, originalFilename, fileUrl, fileSize);
     } else {
         ws.fileMsgGroupSend(fromUserId, toGroupId, originalFilename, fileUrl, fileSize);
     }
-
     // 4. 消息框处理：
     processMsgBox.sendFileMsg(fileHtml, toUserId, toGroupId);
-
     // 5. 好友列表处理
     processFriendList.sending(content, $sendLi);
 });
@@ -446,15 +436,15 @@ $('.sendBtn').on('click', function () {
         var $sendLi = $('.conLeft').find('li.bg');
         processFriendList.sending(news, $sendLi);
     }
-})
+});
 
 $('.ExP').on('mouseenter', function () {
     $('.emjon').show();
-})
+});
 
 $('.emjon').on('mouseleave', function () {
     $('.emjon').hide();
-})
+});
 
 $('.emjon li').on('click', function () {
     var imgSrc = $(this).children('img').attr('src');
@@ -486,13 +476,10 @@ $('.emjon li').on('click', function () {
 
 // 好友框点击事件
 function friendLiClickEvent() {
-
     // 1. 设置点击阴影效果
     $(this).addClass('bg').siblings().removeClass('bg');
-
     // 2. 设置显示右侧消息框
     $('.conRight').css("display", "-webkit-box");
-
     // 3. 设置消息框显示对方信息，清空对方id
     var intername = $(this).children('.liRight').children('.intername').text();
     var toUserId = $(this).children('.liRight').children('.hidden-userId').text();
@@ -502,7 +489,6 @@ function friendLiClickEvent() {
     $('.headName').text(intername);
     $('#toUserId').val("");
     $('#toGroupId').val("");
-
     // 4. 设置显示已收到的信息，设置好对方的id
     $('.newsList').html('');
     var messageArray;
@@ -516,10 +502,8 @@ function friendLiClickEvent() {
     for (var i = 0; i < messageArray.length; i++) {
         $('.newsList').append(messageArray[i]);
     }
-
     // 5.设置消息框滚动条滑到底部
     $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
-
     // 6. 去掉红色提醒徽章
     var $badge = $(this).find(".layui-badge");
     if ($badge.length > 0) {
@@ -584,14 +568,12 @@ var processMsgBox = {
     receiveSingleMsg: function (msg, fromUserId) {
         // 1. 设置消息框可见
         $('.conRight').css("display", "-webkit-box");
-
         // 2. 把新消息放到暂存区$('.newsList-temp)，如果用户正处于与发出新消息的用户的消息框，则消息要回显
         $('.newsList-temp').append(msg);
         var $focusUserId = $(".conLeft .bg").find('span.hidden-userId');
         if ($focusUserId.length > 0 && $focusUserId.html() == fromUserId) {
             $('.newsList').append(msg);
         }
-
         // 3. 利用暂存区手动计算、调整新消息的宽度；
         var $answersDiv = $('.newsList-temp li').last().children("div").first();
         var fixWidth = 300; // 消息框本身的最长宽度
@@ -614,11 +596,9 @@ var processMsgBox = {
                     .css("margin-right", minMarginRightWidth + "px");
             }
         }
-
         // 4. 把 调整后的消息html标签字符串 添加到已发送用户消息表，并清空暂存区
         sentMessageMap.get(fromUserId).push($('.newsList-temp li').last().prop("outerHTML"));
         $('.newsList-temp').empty();
-
         // 5. 滚动条滑到底
         $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
     },
@@ -626,14 +606,12 @@ var processMsgBox = {
     receiveGroupMsg: function (msg, toGroupId) {
         // 1. 设置消息框可见
         $('.conRight').css("display", "-webkit-box");
-
         // 2. 把新消息放到暂存区$('.newsList-temp)，如果用户正处于与发出新消息的用户的消息框，则消息要回显
         $('.newsList-temp').append(msg);
         var $focusGroupId = $(".conLeft .bg").find('span.hidden-groupId');
         if ($focusGroupId.length > 0 && $focusGroupId.html() == toGroupId) {
             $('.newsList').append(msg);
         }
-
         // 3. 手动计算、调整回显消息的宽度
         var $answersDiv = $('.newsList-temp li').last().children("div").first();
         var fixWidth = 300; // 消息框本身的最长宽度
@@ -656,11 +634,9 @@ var processMsgBox = {
                     .css("margin-right", minMarginRightWidth + "px");
             }
         }
-
         // 4. 把 调整后的消息html标签字符串 添加到已发送用户消息表，并清空暂存区
         sentMessageMap.get(toGroupId).push($('.newsList-temp li').last().prop("outerHTML"));
         $('.newsList-temp').empty();
-
         // 5. 滚动条滑到底
         $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
     }
@@ -701,13 +677,12 @@ var processFriendList = {
             content = "[图片]";
         }
         $receiveLi.children(".liRight").children('.infor').text(content);
-
         // 3. 新消息置顶
         $('.conLeft ul').prepend($receiveLi.prop("outerHTML"));
         $('.conLeft ul li').first().on('click', friendLiClickEvent);
         $receiveLi.remove();
     }
-}
+};
 
 // 自定义数据结构：已发送用户消息表
 function SentMessageMap() {
