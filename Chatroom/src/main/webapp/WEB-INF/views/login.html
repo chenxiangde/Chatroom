@@ -7,7 +7,7 @@
     <meta name="keywords" content="Transparent Sign In Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
     <script type="application/x-javascript"> 
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-        function hideURLbar(){ window.scrollTo(0,1); } 
+        function hideURLbar(){ window.scrollTo(0,1); }
     </script>
     <script src="static/js/common/jquery-1.9.1.min.js"></script>
     <link rel="icon" href="static/img/chat.ico" type="image/x-icon" />
@@ -22,7 +22,6 @@
 			<div class="sub-main-w3">	
 				<h2>登录</h2>
 				<form>
-					
 					<div class="icon1">
 						<input placeholder="用户名" id="username" type="text"/>
 					</div>
@@ -31,7 +30,7 @@
 						<input  placeholder="密码" id="password" type="password"/>
 					</div>
 					 
-						<div class="clear"></div>
+					<div class="clear"></div>
 					<input type="button" value="登录" onclick="login()"/>
 				</form>
 			</div>
@@ -43,23 +42,22 @@
 <script type="text/javascript">
     function login() {
         $.ajax({
-                type : 'POST',
-                url : 'login',
-                dataType: 'json',
-                data : {
-                    username: $("#username").val(),
-                    password: $("#password").val()
-                },
-                async : false,
-                success: function(data) {
-                    if (data.status == 200) {
-                        window.location.href="chatroom";
-                    } else {
-                        alert(data.msg);
-                    }
+            type: 'POST',
+            url: 'login',
+            dataType: 'json',
+            data: {
+                username: $("#username").val(),
+                password: $("#password").val()
+            },
+            async: false,
+            success: function (data) {
+                if (data.status == 200) {
+                    window.location.href = "chatroom";
+                } else {
+                    alert(data.msg);
                 }
-            });
+            }
+        });
     }
-    
 </script>
 </html>
