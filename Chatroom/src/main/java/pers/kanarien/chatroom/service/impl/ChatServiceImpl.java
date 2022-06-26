@@ -32,12 +32,9 @@ public class ChatServiceImpl implements ChatService{
     public void register(JSONObject param, ChannelHandlerContext ctx) {
         String userId = (String)param.get("userId");
         Constant.onlineUserMap.put(userId, ctx);
-        String responseJson = new ResponseJson().success()
-                .setData("type", ChatType.REGISTER)
-                .toString();
+        String responseJson = new ResponseJson().success().setData("type", ChatType.REGISTER).toString();
         sendMessage(ctx, responseJson);
-        LOGGER.info(MessageFormat.format("userId为 {0} 的用户登记到在线用户表，当前在线人数为：{1}"
-                , userId, Constant.onlineUserMap.size()));
+        LOGGER.info(MessageFormat.format("userId为{0}的用户登记到在线用户表，当前在线人数为：{1}", userId, Constant.onlineUserMap.size()));
     }
 
     @Override
@@ -48,7 +45,7 @@ public class ChatServiceImpl implements ChatService{
         ChannelHandlerContext toUserCtx = Constant.onlineUserMap.get(toUserId);
         if (toUserCtx == null) {
             String responseJson = new ResponseJson()
-                    .error(MessageFormat.format("userId为 {0} 的用户没有登录！", toUserId))
+                    .error(MessageFormat.format("userId为{0}的用户没有登录！", toUserId))
                     .toString();
             sendMessage(ctx, responseJson);
         } else {
@@ -63,24 +60,9 @@ public class ChatServiceImpl implements ChatService{
 
     @Override
     public void groupSend(JSONObject param, ChannelHandlerContext ctx) {
-        
         String fromUserId = (String)param.get("fromUserId");
         String toGroupId = (String)param.get("toGroupId");
         String content = (String)param.get("content");
-        
-        /*String userId = (String)param.get("userId");
-        String fromUsername = (String)param.get("fromUsername");*/
-        /*String responseJson = new ResponseJson().success()
-                .setData("fromUsername", fromUsername)
-                .setData("content", content)
-                .setData("type", ChatType.GROUP_SENDING)
-                .toString();*/
-        /*Set<Entry<String, ChannelHandlerContext>> userCtxs = Constant.onlineUserMap.entrySet();
-        for (Entry<String, ChannelHandlerContext> userCtx : userCtxs) {
-            if (!userCtx.getKey().equals(userId)) {
-                sendMessage(userCtx.getValue(), responseJson);
-            }
-        }*/
         GroupInfo groupInfo = groupDao.getByGroupId(toGroupId);
         if (groupInfo == null) {
             String responseJson = new ResponseJson().error("该群id不存在").toString();
@@ -104,18 +86,15 @@ public class ChatServiceImpl implements ChatService{
     
     @Override
     public void remove(ChannelHandlerContext ctx) {
-        Iterator<Entry<String, ChannelHandlerContext>> iterator = 
-                Constant.onlineUserMap.entrySet().iterator();
+        Iterator<Entry<String, ChannelHandlerContext>> iterator = Constant.onlineUserMap.entrySet().iterator();
         while(iterator.hasNext()) {
             Entry<String, ChannelHandlerContext> entry = iterator.next();
             if (entry.getValue() == ctx) {
                 LOGGER.info("正在移除握手实例...");
                 Constant.webSocketHandshakerMap.remove(ctx.channel().id().asLongText());
-                LOGGER.info(MessageFormat.format("已移除握手实例，当前握手实例总数为：{0}"
-                        , Constant.webSocketHandshakerMap.size()));
+                LOGGER.info(MessageFormat.format("已移除握手实例，当前握手实例总数为：{0}", Constant.webSocketHandshakerMap.size()));
                 iterator.remove();
-                LOGGER.info(MessageFormat.format("userId为 {0} 的用户已退出聊天，当前在线人数为：{1}"
-                        , entry.getKey(), Constant.onlineUserMap.size()));
+                LOGGER.info(MessageFormat.format("userId为{0}的用户已退出聊天，当前在线人数为：{1}", entry.getKey(), Constant.onlineUserMap.size()));
                 break;
             }
         }
@@ -178,18 +157,11 @@ public class ChatServiceImpl implements ChatService{
     
     @Override
     public void typeError(ChannelHandlerContext ctx) {
-        String responseJson = new ResponseJson()
-                .error("该类型不存在！")
-                .toString();
+        String responseJson = new ResponseJson().error("该类型不存在！").toString();
         sendMessage(ctx, responseJson);
     }
-    
 
-    
     private void sendMessage(ChannelHandlerContext ctx, String message) {
         ctx.channel().writeAndFlush(new TextWebSocketFrame(message));
     }
-
-   
-    
 }
