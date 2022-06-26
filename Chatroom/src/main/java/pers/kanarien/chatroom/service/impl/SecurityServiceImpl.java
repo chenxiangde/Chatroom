@@ -16,14 +16,14 @@ import pers.kanarien.chatroom.service.SecurityService;
 import pers.kanarien.chatroom.util.Constant;
 
 @Service
-public class SecurityServiceImpl implements SecurityService{
+public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
     private UserInfoDao userInfoDao;
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
-    
-    
+
+
     @Override
     public ResponseJson login(String username, String password, HttpSession session) {
         UserInfo userInfo = userInfoDao.getByUsername(username);
@@ -44,8 +44,7 @@ public class SecurityServiceImpl implements SecurityService{
             return new ResponseJson().error("请先登录！");
         }
         session.removeAttribute(Constant.USER_TOKEN);
-        LOGGER.info(MessageFormat.format("userId为 {0} 的用户已注销登录!", userId));
+        LOGGER.info(MessageFormat.format("userId为{0}的用户已注销登录!", userId));
         return new ResponseJson().success();
     }
-
 }

@@ -17,8 +17,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public ResponseJson getByUserId(String userId) {
         UserInfo userInfo = userInfoDao.getByUserId(userId);
-        return new ResponseJson().success()
-                .setData("userInfo", userInfo);
+        return new ResponseJson().success().setData("userInfo", userInfo);
     }
-
 }
