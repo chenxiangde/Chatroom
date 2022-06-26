@@ -47,10 +47,9 @@ public class ResponseJson extends HashMap<String, Object> {
     }
 
     public ResponseJson setData(String key, Object obj) {
-        @SuppressWarnings("unchecked")
         HashMap<String, Object> data = (HashMap<String, Object>) get("data");
         if (data == null) {
-            data = new HashMap<String, Object>();
+            data = new HashMap<>();
             put("data", data);
         }
         data.put(key, obj);
