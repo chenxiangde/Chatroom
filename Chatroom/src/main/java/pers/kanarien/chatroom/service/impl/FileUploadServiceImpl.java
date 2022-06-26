@@ -19,6 +19,7 @@ import pers.kanarien.chatroom.util.FileUtils;
 public class FileUploadServiceImpl implements FileUploadService{
 
     private final static String SERVER_URL_PREFIX = "http://localhost:8080/WebSocket/";
+
     private final static String FILE_STORE_PATH = "UploadFile";
     
     @Override
@@ -51,5 +52,4 @@ public class FileUploadServiceImpl implements FileUploadService{
     private String getRandomUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
-
 }
