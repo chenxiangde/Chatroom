@@ -18,11 +18,10 @@ import pers.kanarien.chatroom.util.Constant;
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
-    @Autowired
-    private UserInfoDao userInfoDao;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
+    @Autowired
+    private UserInfoDao userInfoDao;
 
     @Override
     public ResponseJson login(String username, String password, HttpSession session) {
@@ -36,6 +35,7 @@ public class SecurityServiceImpl implements SecurityService {
         session.setAttribute(Constant.USER_TOKEN, userInfo.getUserId());
         return new ResponseJson().success();
     }
+
 
     @Override
     public ResponseJson logout(HttpSession session) {
