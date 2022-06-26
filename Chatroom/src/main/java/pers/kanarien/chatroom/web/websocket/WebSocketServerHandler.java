@@ -32,8 +32,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<WebSocke
     private ChatService chatService;
 
     /**
-     * 描述：读取完连接的消息后，对消息进行处理。
-     *      这里主要是处理WebSocket请求
+     * 描述：读取完连接的消息后，对消息进行处理。这里主要是处理WebSocket请求
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame msg) throws Exception {
@@ -49,8 +48,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<WebSocke
     private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
         // 关闭请求
         if (frame instanceof CloseWebSocketFrame) {
-            WebSocketServerHandshaker handshaker = 
-                    Constant.webSocketHandshakerMap.get(ctx.channel().id().asLongText());
+            WebSocketServerHandshaker handshaker = Constant.webSocketHandshakerMap.get(ctx.channel().id().asLongText());
             if (handshaker == null) {
                 sendErrorMessage(ctx, "不存在的客户端连接！");
             } else {
@@ -67,8 +65,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<WebSocke
         if (!(frame instanceof TextWebSocketFrame)) {
             sendErrorMessage(ctx, "仅支持文本(Text)格式，不支持二进制消息");
         }
-
-        // 客服端发送过来的消息
+        // 客户端发送过来的消息
         String request = ((TextWebSocketFrame)frame).text();
         LOGGER.info("服务端收到新信息：" + request);
         JSONObject param = null;
@@ -76,13 +73,11 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<WebSocke
             param = JSONObject.parseObject(request);
         } catch (Exception e) {
             sendErrorMessage(ctx, "JSON字符串转换出错！");
-            e.printStackTrace();
         }
         if (param == null) {
             sendErrorMessage(ctx, "参数为空！");
             return;
         }
-
         String type = (String) param.get("type");
         switch (type) {
             case "REGISTER":
@@ -119,16 +114,12 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<WebSocke
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
+        LOGGER.error("WebSocketServer Exception:", cause);
         ctx.close();
     }
-    
-    
+
     private void sendErrorMessage(ChannelHandlerContext ctx, String errorMsg) {
-        String responseJson = new ResponseJson()
-                .error(errorMsg)
-                .toString();
+        String responseJson = new ResponseJson().error(errorMsg).toString();
         ctx.channel().writeAndFlush(new TextWebSocketFrame(responseJson));
     }
-
 }
